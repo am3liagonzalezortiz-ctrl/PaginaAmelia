@@ -1,0 +1,465 @@
+/* 01. FONDO DE PUNTOS - GRID */ 
+    .grid-background {
+    position: fixed;
+    inset: 0;
+    z-index: -1; /* detrás de todo */
+    background-image:
+        radial-gradient(circle, #444 1px, transparent 1px);
+    background-size: 40px 40px;
+    }
+
+    body {
+    font-family: "JetBrains Mono", monospace;
+    overflow-x: hidden;
+    }
+
+    /* Imagen fija en el centro */
+    .center-wrapper {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    }
+
+    .mariquita-image {
+    max-width: 550px;
+    cursor: pointer;
+    pointer-events: auto;
+    }
+
+    /* Contenedor que ocupa toda la pantalla para las palabras */
+    .floating-sections {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    }
+
+    .section-item {
+    position: absolute;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-family: "JetBrains Mono", monospace;
+    background: #111;
+    color: #fff;
+    font-size: 16px;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.2s;
+    pointer-events: auto;
+    text-decoration: none;
+    }
+    .section-item:first-child {
+    background: #e3cd00;
+    color: #ffffff;
+    }
+
+    .section-item:hover {
+    background: #b70009;
+    transform: translateY(-2px);
+    }
+
+
+
+/* 02. CAMBIO DE PÁGINAS - BOTÓN MARIQUITA -  TÍTULOS */ 
+
+    .page-hidden { display: none; }
+    .page-visible { display: block; }
+
+    .page-section { 
+    padding: 28px;
+    padding-top: 0;
+    }
+
+    .section-top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 30px;
+    }
+
+    /* TÍTULO DE APARTADOS */ 
+    .section-title {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 32px;
+    font-weight: 200;
+    text-transform: uppercase;
+    }
+
+    /* LINKS DERECHA EN -> PROYECTOS */ 
+    .section-links {
+    position: absolute;
+    right: 28px;    
+    top:50%;        
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    }
+
+    .section-link {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #000;
+    transition: color 0.15s ease;
+    }
+
+    .section-link:hover,
+    .section-link-activa {
+    color: #b70009;
+    }
+
+    .back-icon {
+    width: 55px;        
+    height: auto;
+    display: inline-block;
+    margin-bottom: 20px;
+    margin-left: 5px; 
+    transform: translateY(9px);
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .back-icon:hover { 
+    opacity: 0.8;
+    }
+
+ /* HAMBURGUESA MENU PROYECTOS */ 
+
+  .menu-wrapper { display: none;}
+
+  /* TELÉFONO */
+  @media (max-width: 768px) {
+    .section-links {
+    display: none;
+  }
+
+  .menu-wrapper {
+    display: block;    /* mostrar icono hamburguesa */
+    margin-left: auto;
+    position: relative;
+  }
+
+  .menu-toggle,
+  .mobile-menu-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .mobile-menu-box {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 240px;
+    padding: 16px 18px;
+    border: 1px solid #000;
+    background: #fff;
+    box-sizing: border-box;
+    display: none;  /* oculta por defecto */
+  }
+
+  .mobile-menu-box.open { display: block;} 
+
+  .mobile-menu-links {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+}
+
+/* 03. EDICIÓN DE TEXTO E IMÁGENES EN PAGINA DE PROYECTOS */ 
+
+  /* Grid general: 2 columnas en pantallas grandes */ 
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 40px;
+    margin-bottom: 0;
+  }
+
+  /* Cada tarjeta: texto vertical a la izquierda, imagen a la derecha */
+  .project-card {
+    display: flex;
+    align-items: stretch; 
+  }
+
+  .project-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 12px;
+  }
+
+  /* Contenedor imagen + tarjeta */
+  .project-media {position: relative;}
+
+  /* Texto lateral, alineado abajo */
+  .project-side-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    padding: 2px 2px;
+    display: flex;
+    align-items: flex-end;     /* se pega al borde inferior del contenedor */
+  }
+
+  /* Contenedor de año + imagen */
+  .project-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 12px;
+  }
+
+  /* Año arriba */
+  .project-top-text {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  /* Imagen responsiva */
+  .project-image {
+    width: 100%;
+    height: auto;          /* el alto que quieras para todas */
+    display: block;
+  }
+
+/* TARTEJA DE CONTENIDO DE PROYECTOS*/ 
+
+ .project-overlay {
+    position: absolute;
+    inset: 0;
+    background: #ffffff;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    display: none;
+  }
+
+  .project-overlay.open {display: block;}
+
+  .overlay-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;   /* dos columnas iguales */
+    grid-template-rows: repeat(2, minmax(0, 1fr));     /* dos filas iguales */
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+    padding: 24px 28px;               /* margen grande del recuadro blanco */
+    box-sizing: border-box;
+  }
+
+  /* Todas las imágenes comparten el mismo estilo */
+  .overlay-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Posiciones: 3 imágenes + texto */
+  .overlay-img:nth-of-type(1) { grid-column: 1 / 2; grid-row: 1 / 2; }
+  .overlay-img:nth-of-type(2) { grid-column: 2 / 3; grid-row: 1 / 2; }
+  .overlay-img:nth-of-type(3) { grid-column: 1 / 2; grid-row: 2 / 3; }
+
+    /* texto abajo derecha */
+   .overlay-text {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    align-self: end;
+    justify-self: end;
+    text-align: right;
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(6px, 1.2vw, 12px);
+    line-height: 1.3;
+    overflow: hidden;
+   }
+ 
+  .overlay-text p {margin: 0;}
+
+  .overlay-text-strong {
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  /* Estilo especial SOLO para LÁMPARA PALEM */
+  
+    .overlay-grid-palem {grid-template-rows: 1fr 1fr;}
+    .overlay-grid-palem .overlay-img:nth-of-type(1) { 
+      grid-column: 1 / 2; 
+      grid-row: 1 / 3;
+    }
+
+    /* imagen derecha solo arriba */
+    .overlay-grid-palem .overlay-img:nth-of-type(2) {
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+    }
+
+    /* texto abajo derecha (mismo estilo que el resto) */
+    .overlay-grid-palem .overlay-text {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+    }
+
+  @media (max-width: 480px) {
+    .overlay-text {
+      font-size: clamp(5px, 1.2vw, 9px);
+    }
+  }
+
+    @media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr; /* uno debajo de otro */
+        gap: 32px;
+    }
+    .project-card {
+        flex-direction: row;
+    }
+    }
+
+
+    /* MISCELÁNEO */ 
+
+    .misc-subtitle {
+      grid-column: 1 / 2;
+      margin: 0;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      line-height: 1.4;
+      color: #000000;                  /* un poco más suave que el título */
+    }
+
+    /* bloque donde van todas las imágenes */
+  .miscelaneo-grid {
+    display: grid;                                      /* activa grid */ 
+    grid-template-columns: repeat(auto-fill, 140px);    /* 240 = 6×40px */
+    grid-auto-rows: 110px;                              /* 160 = 4×40px */ 
+    gap: 40px;                                          /* separación 40×40 */ 
+    align-items: start;                                 /* alineadas arriba */ 
+    margin-top: 40px;
+  }
+
+    /* base para cualquier item */
+  .miscelaneo-grid .item {
+    margin: 0;
+    border: 1px solid #000000;
+  }
+
+  /* horizontales (bocetos y libro) */
+  .miscelaneo-grid .item--h {grid-column: span 2; grid-row: span 2;}              /* ancho grande */ 
+
+  /* verticales (maquetación) */
+  .miscelaneo-grid .item--v {grid-column: span 1; grid-row: span 2;}
+
+  /* la imagen dentro del módulo */
+  .miscelaneo-grid .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;                            /* no deforma */ 
+    display: block;
+  }
+
+    /* grid especial de maquetación */
+  .maquetacion-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 140px); /* 6 columnas = 6 bitácora arriba, 6 dior abajo */
+    grid-auto-rows: 220px;
+    gap: 40px;
+  }
+
+  /* cada vertical ocupa una celda */
+  .maquetacion-grid .item--v {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  @media (max-width: 768px) {
+    /* cualquier grid de misceláneo */
+    .miscelaneo-grid,
+    .maquetacion-grid {
+      grid-template-columns: repeat(2, minmax(40vw, 1fr)); /* 2 columnas fijas de 140 */
+      grid-auto-rows: auto;
+      gap: 40px;                               /* misma separación */
+      justify-content: center;                 /* centra el grid en la pantalla */
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+  }
+
+
+  /* ACERCA DE MÍ */
+.about-wrapper {
+  position: relative;
+  min-height: calc(100vh - 120px); /* ajusta restando cabecera si hace falta */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* imagen centrada */
+.about-photo {
+  max-width: 380px;
+  width: 60vw;
+  height: auto;
+  display: block;
+}
+
+/* tarjeta con estilo de tus otras tarjetas */
+.about-card {
+  position: absolute;
+  left: 19%;                 /* entra desde el lado izquierdo */
+  top: 60%;
+  transform: translateY(-50%);
+  width: 40%;                /* solo un “trozo” sobre la imagen */
+  max-width: 420px;
+  background: #ffffff;
+  border: 1px solid #000;
+  padding: 16px 20px;
+  box-sizing: border-box;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* títulos/texto dentro de la tarjeta */
+.about-card h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.about-card p {
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* RESPONSIVE: en móvil, tarjeta debajo de la imagen */
+@media (max-width: 768px) {
+  .about-wrapper {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .about-photo {
+    width: 70vw;
+    max-width: 320px;
+  }
+
+  .about-card {
+    position: static;        /* ya no flotante */
+    transform: none;
+    width: 80%;
+    margin-top: -20px;
+  }
+}
